@@ -25,7 +25,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:4000",
+        url: "http://project-backend-cybersoft2.herokuapp.com/api/v1",
       },
     ],
   },

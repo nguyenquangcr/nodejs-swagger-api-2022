@@ -70,7 +70,7 @@ router.get("/", (req, res) => {
  *         name: id
  *         schema:
  *           type: string
- *         required: true
+ *         required: false
  *         description: The book id
  *     responses:
  *       200:
@@ -203,5 +203,48 @@ router.delete("/:id", (req, res) => {
 
   res.sendStatus(200);
 });
+
+/**
+ * @swagger
+ * tags:
+ *   name: QuanLyNguoiDung
+ *   description: User Management Api
+ */
+
+/**
+ * @swagger
+ * /users?current=&pageSize=&search=:
+ *   get:
+ *     summary: Lấy danh sách người dùng
+ *     tags: [QuanLyNguoiDung]
+ *     parameters:
+ *       - in: query
+ *         name: current
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: The current page
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: The page size
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Search name users
+ *     responses:
+ *       200:
+ *         description: The book was deleted
+ *         headers:
+ *              Access-Control-Allow-Origin:
+ *                                  type: string
+ *       404:
+ *         description: The book was not found
+ *
+ */
 
 module.exports = router;
