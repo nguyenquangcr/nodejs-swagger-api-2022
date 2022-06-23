@@ -31,6 +31,47 @@ const idLength = 8;
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - firstName
+ *         - lastName
+ *         - email
+ *         - password
+ *         - birthday
+ *         - phoneNumber
+ *       properties:
+ *         firstName:
+ *           type: string
+ *           description: Tên đầu của người dùng
+ *         lastName:
+ *           type: string
+ *           description: Tên cuối của người dùng
+ *         email:
+ *           type: string
+ *           description: Email người dùng
+ *         password:
+ *           type: string
+ *           description: Mật khẩu người dùng
+ *         birthday:
+ *           type: string
+ *           description: Mô tả người dùng
+ *         phoneNumber:
+ *           type: string
+ *           description: Số điện thoại người dùng
+ *       example:
+ *         firstName: zzzzz
+ *         lastName: Nguyễn
+ *         email: hoa@ncc.asia
+ *         password: "12345678"
+ *         birthday: 2022-02-04 00:00:00
+ *         phoneNumber: "09090909090"
+ */
+
+/**
+ * @swagger
  * tags:
  *   name: Books
  *   description: The books managing API
@@ -245,6 +286,29 @@ router.delete("/:id", (req, res) => {
  *       404:
  *         description: The book was not found
  *
+ */
+
+/**
+ * @swagger
+ * /users/sign-up:
+ *   post:
+ *     summary: Thêm người dùng
+ *     tags: [QuanLyNguoiDung]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: The users was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
  */
 
 module.exports = router;
