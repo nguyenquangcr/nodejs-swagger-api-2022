@@ -6,6 +6,16 @@ const idLength = 8;
 
 /**
  * @swagger
+ *components:
+ *  securitySchemes:
+ *   bearerAuth:
+ *     type: http
+ *     scheme: bearer
+ *     bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * components:
  *   schemas:
  *     Book:
@@ -279,12 +289,59 @@ router.delete("/:id", (req, res) => {
  *         description: Search name users
  *     responses:
  *       200:
- *         description: The book was deleted
+ *         description: The users was deleted
  *         headers:
  *              Access-Control-Allow-Origin:
  *                                  type: string
  *       404:
- *         description: The book was not found
+ *         description: The users was not found
+ *
+ */
+
+/**
+ * @swagger
+ * /users/detail?id=:
+ *   get:
+ *     summary: Lấy thông tin chi tiết người dùng
+ *     tags: [QuanLyNguoiDung]
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: id user
+ *     responses:
+ *       200:
+ *         description: get info user success
+ *         headers:
+ *              Access-Control-Allow-Origin:
+ *                                  type: string
+ *       404:
+ *         description: The user was not found
+ *
+ */
+
+/**
+ * @swagger
+ * /users/history:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Thông tin tài khoản
+ *     tags: [QuanLyNguoiDung]
+ *     parameters:
+ *       - in: header
+ *         name: authorization
+ *         schema:
+ *           type: string
+ *         required: true
+ *         example: Bearer TokenDMC
+ *     responses:
+ *       200:
+ *         description: get info account success
+ *       404:
+ *         description: The user was not found
  *
  */
 
@@ -309,6 +366,79 @@ router.delete("/:id", (req, res) => {
  *               $ref: '#/components/schemas/User'
  *       500:
  *         description: Some server error
+ */
+
+/**
+ * @swagger
+ * /users/sign-in:
+ *   post:
+ *     summary: Đăng nhập
+ *     tags: [QuanLyNguoiDung]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *           example:
+ *              email: hoa@ncc.asia
+ *              password: "12345678"
+ *     responses:
+ *       200:
+ *         description: The users was successfully created
+ *       500:
+ *         description: Some server error
+ */
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   put:
+ *     summary: Cập nhật người dùng
+ *     tags: [QuanLyNguoiDung]
+ *     parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: The user id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: The users was successfully update
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ */
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Xoá người dùng
+ *     tags: [QuanLyNguoiDung]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user id
+ *
+ *     responses:
+ *       200:
+ *         description: The user was deleted
+ *       404:
+ *         description: The user was not found
  */
 
 module.exports = router;
