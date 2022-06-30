@@ -82,6 +82,47 @@ const idLength = 8;
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Movies:
+ *       type: object
+ *       required:
+ *         - name
+ *         - trailer
+ *         - poster
+ *         - description
+ *         - startTime
+ *         - evaluate
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Tên phim
+ *         trailer:
+ *           type: string
+ *           description: Link trailer phim
+ *         poster:
+ *           type: string
+ *           description: Link poster phim
+ *         description:
+ *           type: string
+ *           description: Tiêu đề phim
+ *         startTime:
+ *           type: string
+ *           description: Thời gian bắt đầu phim
+ *         evaluate:
+ *           type: string
+ *           description: none
+ *       example:
+ *         name: hồi chuông lạ
+ *         trailer: https://www.youtube.com/watch?v=u34gHaRiBIU
+ *         poster: poster
+ *         description: Hồi Chuông Lạ - From lấy bối cảnh tại một thị trấn u ám, hoang văng ở miền trung nước Mỹ. Khi nơi đây đang xảy một hiện tượng vô cùng kỳ lạ.
+ *         startTime: 2022-02-04 00:00:00
+ *         evaluate: "5"
+ */
+
+/**
+ * @swagger
  * tags:
  *   name: Books
  *   description: The books managing API
@@ -439,6 +480,130 @@ router.delete("/:id", (req, res) => {
  *         description: The user was deleted
  *       404:
  *         description: The user was not found
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: QuanLyPhim
+ *   description: Movie Management Api
+ */
+
+/**
+ * @swagger
+ * /movies:
+ *   post:
+ *     summary: Thêm phim
+ *     tags: [QuanLyPhim]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Movies'
+ *     responses:
+ *       200:
+ *         description: The Movies was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Movies'
+ *       500:
+ *         description: Some server error
+ */
+
+/**
+ * @swagger
+ * /movies:
+ *   get:
+ *     summary: Lấy danh sách tất cả phim
+ *     tags: [QuanLyPhim]
+ *     responses:
+ *       200:
+ *         description: The list of the movies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Movies'
+ */
+
+/**
+ * @swagger
+ * /movies/{id}:
+ *   get:
+ *     summary: Lấy thông tin chi tiết bộ phim theo id
+ *     tags: [QuanLyPhim]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: The movies id
+ *     responses:
+ *       200:
+ *         description: The movies description by id
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Movies'
+ *       404:
+ *         description: The movies was not found
+ */
+
+/**
+ * @swagger
+ * /movies/{id}:
+ *  put:
+ *    summary: Cập nhật phim theo id
+ *    tags: [QuanLyPhim]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Id của bộ phim
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Movies'
+ *    responses:
+ *      200:
+ *        description: Bộ phim đã được cập nhật
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *      404:
+ *        description: The movies was not found
+ *      500:
+ *        description: Some error happened
+ */
+
+/**
+ * @swagger
+ * /movies/{id}:
+ *   delete:
+ *     summary: Xoá phim
+ *     tags: [QuanLyPhim]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Id phim
+ *
+ *     responses:
+ *       200:
+ *         description: The movie was deleted
+ *       404:
+ *         description: The movie was not found
  */
 
 module.exports = router;
