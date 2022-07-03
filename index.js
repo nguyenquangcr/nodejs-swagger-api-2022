@@ -27,7 +27,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://project-backend-cybersoft2.herokuapp.com/api/v1",
+        url: "http://project-backend-cybersoft2.herokuapp.com/api/v1",
       },
     ],
   },
