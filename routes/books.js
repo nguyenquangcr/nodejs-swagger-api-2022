@@ -123,27 +123,84 @@ const idLength = 8;
 
 /**
  * @swagger
- * tags:
- *   name: Books
- *   description: The books managing API
+ * components:
+ *   schemas:
+ *     SystemTheater:
+ *       type: object
+ *       required:
+ *         - tenHeThongRap
+ *         - biDanh
+ *         - logo
+ *       properties:
+ *         tenHeThongRap:
+ *           type: string
+ *           description: Tên hệ thống rạp
+ *         biDanh:
+ *           type: string
+ *           description: Bí danh hệ thống rạp
+ *         logo:
+ *           type: string
+ *           description: Logo hệ thống rạp
+ *       example:
+ *         tenHeThongRap: Cinestar
+ *         biDanh: CNS
+ *         logo: http://movie0706.cybersoft.edu.vn/hinhanh/cgv.png
  */
 
 /**
  * @swagger
- * /books:
- *   get:
- *     summary: Returns the list of all the books
- *     tags: [Books]
- *     responses:
- *       200:
- *         description: The list of the books
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Book'
+ * components:
+ *   schemas:
+ *     GroupTheater:
+ *       type: object
+ *       required:
+ *         - codeGroupTheater
+ *         - nameGroupTheater
+ *         - location
+ *         - maHeThongRap
+ *       properties:
+ *         codeGroupTheater:
+ *           type: string
+ *           description: Mã cụm rạp
+ *         nameGroupTheater:
+ *           type: string
+ *           description: Tên cụm rạp
+ *         location:
+ *           type: string
+ *           description: Vị trí
+ *         maHeThongRap:
+ *           type: number
+ *           description: Mã hệ thống rạp
+ *       example:
+ *         codeGroupTheater: BHD Bơ Bao
+ *         nameGroupTheater: BHD - Aeon Tân Phú
+ *         location: 30 Bờ Bao Tân Thắng, Sơn Kỳ, Tân Phú
+ *         maHeThongRap: 4
  */
+
+// /**
+//  * @swagger
+//  * tags:
+//  *   name: Books
+//  *   description: The books managing API
+//  */
+
+// /**
+//  * @swagger
+//  * /books:
+//  *   get:
+//  *     summary: Returns the list of all the books
+//  *     tags: [Books]
+//  *     responses:
+//  *       200:
+//  *         description: The list of the books
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: array
+//  *               items:
+//  *                 $ref: '#/components/schemas/Book'
+//  */
 
 router.get("/", (req, res) => {
   const books = req.app.db.get("books");
@@ -151,29 +208,29 @@ router.get("/", (req, res) => {
   res.send(books);
 });
 
-/**
- * @swagger
- * /books/{id}:
- *   get:
- *     summary: Get the book by id
- *     tags: [Books]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: false
- *         description: The book id
- *     responses:
- *       200:
- *         description: The book description by id
- *         contens:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Book'
- *       404:
- *         description: The book was not found
- */
+// /**
+//  * @swagger
+//  * /books/{id}:
+//  *   get:
+//  *     summary: Get the book by id
+//  *     tags: [Books]
+//  *     parameters:
+//  *       - in: path
+//  *         name: id
+//  *         schema:
+//  *           type: string
+//  *         required: false
+//  *         description: The book id
+//  *     responses:
+//  *       200:
+//  *         description: The book description by id
+//  *         contens:
+//  *           application/json:
+//  *             schema:
+//  *               $ref: '#/components/schemas/Book'
+//  *       404:
+//  *         description: The book was not found
+//  */
 
 router.get("/:id", (req, res) => {
   const book = req.app.db.get("books").find({ id: req.params.id }).value();
@@ -185,28 +242,28 @@ router.get("/:id", (req, res) => {
   res.send(book);
 });
 
-/**
- * @swagger
- * /books:
- *   post:
- *     summary: Create a new book
- *     tags: [Books]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Book'
- *     responses:
- *       200:
- *         description: The book was successfully created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Book'
- *       500:
- *         description: Some server error
- */
+// /**
+//  * @swagger
+//  * /books:
+//  *   post:
+//  *     summary: Create a new book
+//  *     tags: [Books]
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             $ref: '#/components/schemas/Book'
+//  *     responses:
+//  *       200:
+//  *         description: The book was successfully created
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               $ref: '#/components/schemas/Book'
+//  *       500:
+//  *         description: Some server error
+//  */
 
 router.post("/", (req, res) => {
   try {
@@ -223,37 +280,37 @@ router.post("/", (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /books/{id}:
- *  put:
- *    summary: Update the book by the id
- *    tags: [Books]
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: string
- *        required: true
- *        description: The book id
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/Book'
- *    responses:
- *      200:
- *        description: The book was updated
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Book'
- *      404:
- *        description: The book was not found
- *      500:
- *        description: Some error happened
- */
+// /**
+//  * @swagger
+//  * /books/{id}:
+//  *  put:
+//  *    summary: Update the book by the id
+//  *    tags: [Books]
+//  *    parameters:
+//  *      - in: path
+//  *        name: id
+//  *        schema:
+//  *          type: string
+//  *        required: true
+//  *        description: The book id
+//  *    requestBody:
+//  *      required: true
+//  *      content:
+//  *        application/json:
+//  *          schema:
+//  *            $ref: '#/components/schemas/Book'
+//  *    responses:
+//  *      200:
+//  *        description: The book was updated
+//  *        content:
+//  *          application/json:
+//  *            schema:
+//  *              $ref: '#/components/schemas/Book'
+//  *      404:
+//  *        description: The book was not found
+//  *      500:
+//  *        description: Some error happened
+//  */
 
 router.put("/:id", (req, res) => {
   try {
@@ -269,26 +326,26 @@ router.put("/:id", (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /books/{id}:
- *   delete:
- *     summary: Remove the book by id
- *     tags: [Books]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The book id
- *
- *     responses:
- *       200:
- *         description: The book was deleted
- *       404:
- *         description: The book was not found
- */
+// /**
+//  * @swagger
+//  * /books/{id}:
+//  *   delete:
+//  *     summary: Remove the book by id
+//  *     tags: [Books]
+//  *     parameters:
+//  *       - in: path
+//  *         name: id
+//  *         schema:
+//  *           type: string
+//  *         required: true
+//  *         description: The book id
+//  *
+//  *     responses:
+//  *       200:
+//  *         description: The book was deleted
+//  *       404:
+//  *         description: The book was not found
+//  */
 
 router.delete("/:id", (req, res) => {
   req.app.db.get("books").remove({ id: req.params.id }).write();
@@ -604,6 +661,116 @@ router.delete("/:id", (req, res) => {
  *         description: The movie was deleted
  *       404:
  *         description: The movie was not found
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: QuanLyRap
+ *   description: System Theater Movie Manager
+ */
+
+/**
+ * @swagger
+ * /system-theater:
+ *   get:
+ *     summary: Lấy danh sách hệ thống rạp
+ *     tags: [QuanLyRap]
+ *     responses:
+ *       200:
+ *         description: The list of the system theater
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Movies'
+ */
+
+/**
+ * @swagger
+ * /system-theater/create-system-theater:
+ *   post:
+ *     summary: Thêm hệ thống rạp
+ *     tags: [QuanLyRap]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/SystemTheater'
+ *     responses:
+ *       200:
+ *         description: The system theater was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SystemTheater'
+ *       500:
+ *         description: Some server error
+ */
+
+/**
+ * @swagger
+ * /group-theater:
+ *   get:
+ *     summary: Lấy tất cả cụm rạp theo hệ thống
+ *     tags: [QuanLyRap]
+ *     responses:
+ *       200:
+ *         description: The list of the system theater
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Movies'
+ */
+
+/**
+ * @swagger
+ * /group-theater/{maHeThongRap}:
+ *   get:
+ *     summary: Lấy thông tin cụm rạp theo hệ thống
+ *     tags: [QuanLyRap]
+ *     parameters:
+ *       - in: path
+ *         name: maHeThongRap
+ *         schema:
+ *           type: string
+ *         description: Mã hệ thống rạp
+ *     responses:
+ *       200:
+ *         description: The list of the system theater
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Movies'
+ */
+
+/**
+ * @swagger
+ * /group-theater/create-group-theater:
+ *   post:
+ *     summary: Thêm cụm rạp
+ *     tags: [QuanLyRap]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/GroupTheater'
+ *     responses:
+ *       200:
+ *         description: The system theater was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GroupTheater'
+ *       500:
+ *         description: Some server error
  */
 
 module.exports = router;
